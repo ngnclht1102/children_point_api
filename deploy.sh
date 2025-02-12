@@ -23,7 +23,7 @@ echo "Extracted application version from pom.xml: $APP_VERSION" && \
 # Step 5: Package the JAR file into a ZIP (required by Elastic Beanstalk)
 ZIP_FILE="childrenpoints-$APP_VERSION.zip"
 echo "Packaging the JAR file into $ZIP_FILE..."
-zip -r $ZIP_FILE childrenpoints.jar && \
+zip -r $ZIP_FILE . && \
 
 # Step 6: Upload the ZIP file to S3
 S3_BUCKET="elasticbeanstalk-ap-southeast-1-863518418999"

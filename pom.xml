@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>overcoded</groupId>
 	<artifactId>childrenpoints</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7</version>
 	<name>childrenpoints</name>
 	<description>Children points and reward</description>
 	<url/>
