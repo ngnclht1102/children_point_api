@@ -30,13 +30,13 @@ S3_BUCKET="elasticbeanstalk-ap-southeast-1-863518418999"
 echo "Uploading $ZIP_FILE to S3 bucket $S3_BUCKET..."
 aws s3 cp $ZIP_FILE s3://$S3_BUCKET/ && \
 
-# Step 7: Create a new application version in Elastic Beanstalk (silent mode)
-APP_NAME="children-points"
-echo "Creating a new Elastic Beanstalk application version silently..."
+# Step 7: Create a new application version in Elastic Beanstalk
+APP_NAME="children-point"
+echo "Creating a new Elastic Beanstalk application version..."
 aws elasticbeanstalk create-application-version \
   --application-name "$APP_NAME" \
   --version-label "$APP_VERSION" \
-  --source-bundle S3Bucket="$S3_BUCKET",S3Key="$ZIP_FILE" > /dev/null 2>&1 && \
+  --source-bundle S3Bucket="$S3_BUCKET",S3Key="$ZIP_FILE" && \
 
 # Step 8: Deploy the newly created application version
 echo "Deploying the application version $APP_VERSION..."
