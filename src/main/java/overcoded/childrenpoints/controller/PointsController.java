@@ -43,7 +43,10 @@ public class PointsController {
         response.put("allTimeUsedPoints", allTimeUsedPoints);
         response.put("todayEarnedPoints", todayEarnedPoints);
 
+
+        response.put("status", "OK");
         return response;
     }
+
 
 }

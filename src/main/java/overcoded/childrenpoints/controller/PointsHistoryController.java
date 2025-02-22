@@ -31,10 +31,17 @@ public class PointsHistoryController {
         return pointsHistoryRepository.findByTypeAndCreatedAtAfter("add", startOfDay);
     }
 
-    @GetMapping("/deduced/today")
+    @GetMapping("/rewarded/today")
     public List<PointsHistory> getTodayDeducedHistory() {
         Instant startOfDay = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
         System.out.println("Getting deduced history for today "+startOfDay);
-        return pointsHistoryRepository.findByTypeAndCreatedAtAfter("deduct", startOfDay);
+        return pointsHistoryRepository.findRewardHistory("deduct", startOfDay);
+    }
+
+    @GetMapping("/violations/today")
+    public List<PointsHistory> getTodayViolationHistory() {
+        Instant startOfDay = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
+        System.out.println("Getting violation history for today "+startOfDay);
+        return pointsHistoryRepository.findViolationHistory("deduct", startOfDay);
     }
 }

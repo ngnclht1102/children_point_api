@@ -11,6 +11,12 @@ import java.util.List;
 public interface PointsHistoryRepository extends JpaRepository<PointsHistory, Long> {
     List<PointsHistory> findByTypeAndCreatedAtAfter(String type, Instant date);
 
+    @Query("SELECT ph FROM PointsHistory ph WHERE ph.type = :type AND ph.createdAt >= :date AND ph.reward IS NOT NULL")
+    List<PointsHistory> findRewardHistory(@Param("type") String type, @Param("date") Instant date);
+
+    @Query("SELECT ph FROM PointsHistory ph WHERE ph.type = :type AND ph.createdAt >= :date AND ph.violation IS NOT NULL")
+    List<PointsHistory> findViolationHistory(@Param("type") String type, @Param("date") Instant date);
+
     @Query("SELECT COALESCE(SUM(ph.points), 0) FROM PointsHistory ph WHERE ph.type = 'deduct'")
     int getAllTimeUsedPoints();
 

@@ -35,4 +35,8 @@ public class PointsHistory {
     @ManyToOne
     @JoinColumn(name = "reward_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_reward"))
     private Rewards reward;
+
+    @ManyToOne
+    @JoinColumn(name = "violation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_violation"))
+    private Violation violation;
 }

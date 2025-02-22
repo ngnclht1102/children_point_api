@@ -14,7 +14,12 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins(
+                                "http://localhost:3000",
+                                "https://children-point-web.vercel.app",
+                                "https://tichdiemhocsinh.com",
+                                "https://www.tichdiemhocsinh.com"
+                        )  // Allow local, deployed frontend, and main domains
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
