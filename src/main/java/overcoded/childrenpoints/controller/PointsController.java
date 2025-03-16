@@ -17,6 +17,7 @@ import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -44,7 +45,8 @@ public class PointsController {
 
         // Count today's earned points (add)
         Instant startOfDay = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
-        int todayEarnedPoints = pointsHistoryRepository.getTodayEarnedPoints(startOfDay, me.getId());
+        Instant endOfDay = startOfDay.plus(1, ChronoUnit.DAYS).minusNanos(1);
+        int todayEarnedPoints = pointsHistoryRepository.getTodayEarnedPoints(startOfDay, endOfDay, me.getId());
 
         // Prepare response
         Map<String, Object> response = new HashMap<>();
