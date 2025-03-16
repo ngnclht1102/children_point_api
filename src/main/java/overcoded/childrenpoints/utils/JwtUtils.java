@@ -50,7 +50,6 @@ public class JwtUtils {
                 return false;
             if (!tokenUsername.equals(userDetails.getUsername()))
                 return false;
-            System.out.println("============validateToken TOKEN VALID");
             return true;
         }  catch(JwtException | IllegalArgumentException e) {
             System.out.println("Invalid JWT Token: " + e.getMessage());

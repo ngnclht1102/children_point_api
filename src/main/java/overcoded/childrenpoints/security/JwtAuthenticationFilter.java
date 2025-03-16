@@ -31,28 +31,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("==========JwtAuthenticationFilter");
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("==========1");
             filterChain.doFilter(request, response);
             return;
         }
         String token = authHeader.substring(7);
-        System.out.println("==========2");
         String username = jwtUtils.extractUsername(token);
-        System.out.println("==========3");
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println("==========4");
             User userDetails = (User) userDetailsService.loadUserByUsername(username);
 
             if (jwtUtils.validateToken(token, userDetails)) {
-                System.out.println("User Authorities: " + userDetails.getAuthorities());
+                System.out.println("============User Authorities: " + userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(upat);
-                System.out.println("Security Context Authentication: " + SecurityContextHolder.getContext().getAuthentication());
-
             }
         }
 

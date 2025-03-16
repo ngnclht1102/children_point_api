@@ -1,5 +1,6 @@
 package overcoded.childrenpoints.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
@@ -15,16 +16,16 @@ public class Violation {
     public Violation() {
     }
 
-    public Violation(String title, String description, int deductedPoints ) {
+    public Violation(String title, String description, int deductedPoints, User user ) {
         this.title = title;
         this.description = description;
         this.deductedPoints = deductedPoints;
+        this.user = user;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @NotBlank(message = "Title is mandatory")
     @Size(max = 255, message = "Title must be less than 255 characters")
@@ -43,5 +44,8 @@ public class Violation {
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt = Instant.now();
 
-
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
