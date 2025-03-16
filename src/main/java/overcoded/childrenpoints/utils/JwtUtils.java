@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private final String SECRET_KEY = "c+wIuydJ9aAiQGy6dx8A6zPsflf7pufB/YN6U5XTG/A="; // TODO: replace with a secure key
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 7;
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365;
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());

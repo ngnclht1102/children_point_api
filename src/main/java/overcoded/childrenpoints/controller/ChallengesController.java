@@ -60,6 +60,7 @@ public class ChallengesController {
         history.setNote("Challenge completed: " + challenge.getTitle()); // Add a note describing the entry
         history.setType("add"); // Set the transaction type as "add"
         history.setChallenge(challenge); // Associate the history record with the completed challenge
+        history.setUser(me);
         pointsHistoryRepository.save(history); // Save the points history record
 
         // Return the new total points

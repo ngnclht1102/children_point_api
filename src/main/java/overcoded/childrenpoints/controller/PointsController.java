@@ -3,23 +3,20 @@ package overcoded.childrenpoints.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import overcoded.childrenpoints.model.Points;
 import overcoded.childrenpoints.model.User;
 import overcoded.childrenpoints.repository.PointsHistoryRepository;
 import overcoded.childrenpoints.repository.PointsRepository;
 import overcoded.childrenpoints.services.PointsService;
 
-import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/points")
@@ -36,7 +33,7 @@ public class PointsController {
         this.pointsService = pointsService;
     }
 
-    @PreAuthorize("hasRole('ROLE_CHILD')")
+    @PreAuthorize("hasAuthority('CHILD')")
     @GetMapping("/status")
     public Map<String, Object> getStatus(@AuthenticationPrincipal User me) {
         Long currentTotalPoint = pointsService.getCurrentPoint(me);
