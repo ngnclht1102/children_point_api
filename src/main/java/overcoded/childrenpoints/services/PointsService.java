@@ -38,4 +38,11 @@ public class PointsService {
         currentPoint.setTotalPoints(newPoint);
         this.pointsRepository.save(currentPoint);
     }
+
+    public void increase(User me, long bonusPoint) {
+        var currentPoint = getCurrentRecord(me);
+        long newPoint = currentPoint.getTotalPoints() + bonusPoint;
+        currentPoint.setTotalPoints(newPoint);
+        this.pointsRepository.save(currentPoint);
+    }
 }
