@@ -1,5 +1,6 @@
 package overcoded.childrenpoints.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class Points {
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt = Instant.now();
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 }

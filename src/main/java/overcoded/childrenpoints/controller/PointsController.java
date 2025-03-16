@@ -11,7 +11,9 @@ import overcoded.childrenpoints.model.Points;
 import overcoded.childrenpoints.model.User;
 import overcoded.childrenpoints.repository.PointsHistoryRepository;
 import overcoded.childrenpoints.repository.PointsRepository;
+import overcoded.childrenpoints.services.PointsService;
 
+import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,24 +26,19 @@ public class PointsController {
 
     private final PointsRepository pointsRepository;
     private final PointsHistoryRepository pointsHistoryRepository;
+    private final PointsService pointsService;
 
     @Autowired
-    public PointsController(PointsRepository pointsRepository, PointsHistoryRepository pointsHistoryRepository) {
+    public PointsController(PointsRepository pointsRepository, PointsHistoryRepository pointsHistoryRepository, PointsService pointsService) {
         this.pointsRepository = pointsRepository;
         this.pointsHistoryRepository = pointsHistoryRepository;
+        this.pointsService = pointsService;
     }
 
     @PreAuthorize("hasRole('ROLE_CHILD')")
     @GetMapping("/status")
     public Map<String, Object> getStatus(@AuthenticationPrincipal User me) {
-        var currentPoint = pointsRepository.findFirstByUserId(me.getId());
-        if (currentPoint == null) {
-            currentPoint = new Points();
-            currentPoint.setUser(me);
-            currentPoint.setTotalPoints(0);
-            pointsRepository.save(currentPoint);
-
-        }
+        Long currentTotalPoint = pointsService.getCurrentPoint(me);
         // Count all-time used points (deduct)
         int allTimeUsedPoints = pointsHistoryRepository.getAllTimeUsedPoints(me.getId());
 
@@ -51,10 +48,9 @@ public class PointsController {
 
         // Prepare response
         Map<String, Object> response = new HashMap<>();
-        response.put("currentPoints", currentPoint != null ? currentPoint.getTotalPoints() : 0);
+        response.put("currentPoints", currentTotalPoint);
         response.put("allTimeUsedPoints", allTimeUsedPoints);
         response.put("todayEarnedPoints", todayEarnedPoints);
-
 
         response.put("status", "OK");
         return response;

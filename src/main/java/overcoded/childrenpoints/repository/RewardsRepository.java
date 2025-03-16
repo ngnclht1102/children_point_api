@@ -6,7 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import overcoded.childrenpoints.model.Rewards;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RewardsRepository extends JpaRepository<Rewards, Long> {
-    List<Rewards> findByRequiredPointsLessThan(@NotNull(message = "Required points can't be null") @Min(value = 1, message = "Required points must be at least 1") Long requiredPoints);
+    List<Rewards> findByRequiredPointsLessThanAndUserId(Long requiredPoints, long userId);
+
+    List<Rewards> findAllByUserId(long userId);
+
+    Optional<Rewards> findByIdAndUserId(long id, long userId);
 }
