@@ -16,9 +16,13 @@ public class Points {
     private long id;
 
     @NotNull(message = "Point can't be null")
-    @Min(value = 1, message = "Point must not be negative")
+    @Min(value = 0, message = "Point must not be negative")
     private long totalPoints;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt = Instant.now();
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 }

@@ -28,4 +28,8 @@ public class Challenge {
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt = Instant.now();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

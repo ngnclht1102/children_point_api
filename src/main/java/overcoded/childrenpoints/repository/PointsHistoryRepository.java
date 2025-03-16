@@ -17,9 +17,9 @@ public interface PointsHistoryRepository extends JpaRepository<PointsHistory, Lo
     @Query("SELECT ph FROM PointsHistory ph WHERE ph.type = :type AND ph.createdAt >= :date AND ph.violation IS NOT NULL")
     List<PointsHistory> findViolationHistory(@Param("type") String type, @Param("date") Instant date);
 
-    @Query("SELECT COALESCE(SUM(ph.points), 0) FROM PointsHistory ph WHERE ph.type = 'deduct'")
-    int getAllTimeUsedPoints();
+    @Query("SELECT COALESCE(SUM(ph.points), 0) FROM PointsHistory ph WHERE ph.type = 'deduct' AND ph.user.id = :userId ")
+    int getAllTimeUsedPoints(@Param("userId") long userId );
 
-    @Query("SELECT COALESCE(SUM(ph.points), 0) FROM PointsHistory ph WHERE ph.type = 'add' AND ph.createdAt >= :startOfDay")
-    int getTodayEarnedPoints(@Param("startOfDay") Instant startOfDay);
+    @Query("SELECT COALESCE(SUM(ph.points), 0) FROM PointsHistory ph WHERE ph.type = 'add' AND ph.createdAt >= :startOfDay AND ph.user.id = :userId")
+    int getTodayEarnedPoints(@Param("startOfDay") Instant startOfDay, @Param("userId") long userId);
 }
